@@ -1,0 +1,29 @@
+load("@aspect_bazel_lib//lib:run_binary.bzl", "run_binary")
+
+sh_binary(
+    name = "debug_args",
+    srcs = ["debug_args.sh"],
+    data = [],
+)
+
+run_binary(
+    name = "repro_one",
+    tool = ":debug_args",
+    args = [
+        "--output-file",
+        "$(location repro_one.txt)",
+        "value with spaces"
+    ],
+    outs = ["repro_one.txt"],
+)
+
+run_binary(
+    name = "repro_two",
+    tool = ":debug_args",
+    args = [
+        "--output-file",
+        "$(location repro_two.txt)",
+        "'value with spaces'"
+    ],
+    outs = ["repro_two.txt"],
+)
